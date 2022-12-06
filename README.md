@@ -1,3 +1,5 @@
+![Alt Text](https://media.giphy.com/media/Mrp0hOdWXyf3oo7ffq/giphy.gif)
+
 # SCREENSHOTTER
 A simple tool to quickly and easily take cropped screenshots, written in C# using WinForms and the .NET framework...
 Designed to be as lightweight and minimalistic as possible, so it's pretty fast and to the point!
