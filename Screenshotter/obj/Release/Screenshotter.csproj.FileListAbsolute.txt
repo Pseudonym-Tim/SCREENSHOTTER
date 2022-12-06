@@ -1,0 +1,11 @@
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\bin\Release\Screenshotter.exe.config
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\bin\Release\Screenshotter.exe
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\bin\Release\Screenshotter.pdb
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.csproj.AssemblyReference.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.csproj.SuggestedBindingRedirects.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.Form1.resources
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.Properties.Resources.resources
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.csproj.GenerateResource.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.csproj.CoreCompileInputs.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.exe
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Release\Screenshotter.pdb

@@ -1,0 +1,11 @@
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.csproj.AssemblyReference.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.csproj.SuggestedBindingRedirects.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.Properties.Resources.resources
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.csproj.GenerateResource.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.csproj.CoreCompileInputs.cache
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.Form1.resources
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\bin\Debug\Screenshotter.exe.config
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\bin\Debug\Screenshotter.exe
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\bin\Debug\Screenshotter.pdb
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.exe
+C:\Users\Pseudonym_Tim\Desktop\Screenshotter\Screenshotter\Screenshotter\obj\Debug\Screenshotter.pdb
