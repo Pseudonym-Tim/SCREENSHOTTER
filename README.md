@@ -1,2 +1,13 @@
 # SCREENSHOTTER
-A simple tool to quickly and easily take cropped screenshots, written in Windows Forms using the .NET framework
+A simple tool to quickly and easily take cropped screenshots, written in C# using WinForms and the .NET framework...
+Designed to be as lightweight and minimalistic as possible, so it's pretty fast and to the point!
+
+* .NET framework 6.0 is required to run this application!
+
+# USAGE:
+* Upon launching the program you'll notice that the screen becomes darker and that you can now click and drag to select a specific region.
+The region that you have selected will be saved as an image to `"C:\Users\Username\Pictures\screenshots\"`. The image will automatically be copied
+to your clipboard, so you can paste it directly into a Discord chat for example.
+
+* Holding the CTRL key will cause the image to open in your specified image viewer, if you want to quickly use it as a reference!
+* It's highly recommended to launch the program using a keybind macro!
