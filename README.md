@@ -2,9 +2,9 @@
 
 # SCREENSHOTTER
 A simple tool to quickly and easily take cropped screenshots, written in C# using WinForms and the .NET framework...
-Designed to be as lightweight and minimalistic as possible, so it's pretty fast and to the point!
+Designed to be as lightweight and minimalistic as possible, so it's pretty quick and to the point!
 
-* .NET framework 6.0 is required to run this application!
+* Built with .NET framework v4.7.2
 
 # USAGE:
 * Upon launching the program you'll notice that the screen becomes darker and that you can now click and drag to select a specific region.
@@ -12,8 +12,13 @@ The region that you have selected will be saved as an image to `"C:\Users\[USERN
 to your clipboard, so you can paste it directly into a Discord chat for example.
 
 * Holding the CTRL key will cause the image to open in your specified image viewer, if you want to quickly use it as a reference!
-* It's highly recommended to launch the program using a keybind macro!
+* At the moment, it's highly recommended to launch the program using a keybind macro...
 
 # NOTE:
 * It's worth noting that you cannot currently take screenshots of most fullscreened applications. If you want to screenshot them you will need to
 put them in borderless window mode at least! Fullscreen application screenshotting may be a thing in the future though!
+
+# TODO:
+* Make it run in the background when launched, and only start screenshotting when a hotkey is pressed
+* Freeze the screen and cancel any inputs that aren't inside the application...
+* Add a exit/cancel screenshot hotkey (Esc)
