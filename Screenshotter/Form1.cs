@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 // TODO: Don't change the opacity of the DrawRectangle selection area or the help text...
 // NOTE: Add back help text?
@@ -10,6 +11,17 @@ namespace Screenshotter
 {
     public partial class Form1 : Form
     {
+        const int WS_EX_LAYERED = 0x80000;
+        const int WS_EX_NOACTIVATE = 0x08000000;
+        const int WS_EX_TOOLWINDOW = 0x00000080;
+        private const int GWL_EXSTYLE = -20;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
         private const float SELECT_RECT_THICKNESS = 2;
         private const bool COPY_TO_CLIPBOARD = true;
 
@@ -23,14 +35,14 @@ namespace Screenshotter
             // Initialize the component...
             InitializeComponent();
 
-            // Make the form stay on top of all other windows...
-            TopMost = true;
+            TopMost = true; // Make the form stay on top of all other windows...
+            ShowInTaskbar = false; // Don't show in taskbar...
 
             // Set background color to black and half the opacity, so we get a nice darkened overlay...
             BackColor = Color.Black;
             Opacity = 0.5f;
 
-            // We don't want a border,
+            // We don't want a border...
             FormBorderStyle = FormBorderStyle.None;
 
             // Set the form's size to the screen size, we want to cover the whole screen...
@@ -47,6 +59,9 @@ namespace Screenshotter
 
             // Enable double buffering and ignore erasing the background to prevent flicker when painting...
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+            int currentExStyle = GetWindowLong(Handle, GWL_EXSTYLE);
+            SetWindowLong(Handle, GWL_EXSTYLE, currentExStyle | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE);
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs mouseEventArgs)
