@@ -12,7 +12,6 @@ The region that you have selected will be saved as an image to `"C:\Users\[USERN
 to your clipboard, so you can paste it directly into a Discord chat for example.
 
 * Holding the CTRL key will cause the image to open in your specified image viewer, if you want to quickly use it as a reference!
-* At the moment, it's highly recommended to launch the program using a keybind macro...
 
 # NOTE:
 * It's worth noting that you cannot currently take screenshots of most fullscreened applications. If you want to screenshot them you will need to
