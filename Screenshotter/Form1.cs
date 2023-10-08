@@ -22,6 +22,15 @@ namespace Screenshotter
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        private const int MYACTION_HOTKEY_ID = 1;
+        private const uint MOD_CONTROL = 0x0002;
+        private const uint VK_SNAPSHOT = 0x7B;
         private const float SELECT_RECT_THICKNESS = 2;
         private const bool COPY_TO_CLIPBOARD = true;
 
@@ -35,33 +44,67 @@ namespace Screenshotter
             // Initialize the component...
             InitializeComponent();
 
-            TopMost = true; // Make the form stay on top of all other windows...
-            ShowInTaskbar = false; // Don't show in taskbar...
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
+            Hide();
 
-            // Set background color to black and half the opacity, so we get a nice darkened overlay...
-            BackColor = Color.Black;
-            Opacity = 0.5f;
+            NotifyIcon notifyIcon;
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = SystemIcons.Information;
+            notifyIcon.Visible = true;
+            notifyIcon.DoubleClick += (sender, args) => Show(); // Show the form when user double-clicks on the tray icon
 
-            // We don't want a border...
-            FormBorderStyle = FormBorderStyle.None;
+            // Optionally: Add context menu to notify icon for user interaction
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.MenuItems.Add("Exit", (sender, args) => Close());
 
-            // Set the form's size to the screen size, we want to cover the whole screen...
-            Size = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            notifyIcon.ContextMenu = contextMenu;
+        }
 
-            // Set the cursor to a crosshair to indicate selection of the screenshot area...
-            Cursor = Cursors.Cross;
+        protected override void OnLoad(EventArgs e)
+        {
+            Visible = false; // Hide the form
+            ShowInTaskbar = false; // Hide from taskbar
+            base.OnLoad(e);
+        }
 
-            // Subscribe to events...
-            MouseDown += new MouseEventHandler(Form1_MouseDown);
-            MouseMove += new MouseEventHandler(Form1_MouseMove);
-            MouseUp += new MouseEventHandler(Form1_MouseUp);
-            Paint += new PaintEventHandler(Form1_Paint);
+        protected override void WndProc(ref Message m)
+        {
+            if(m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID)
+            {
+                TopMost = true; // Make the form stay on top of all other windows...
+                ShowInTaskbar = false; // Don't show in taskbar...
 
-            // Enable double buffering and ignore erasing the background to prevent flicker when painting...
-            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+                // Set background color to black and half the opacity, so we get a nice darkened overlay...
+                BackColor = Color.Black;
+                Opacity = 0.5f;
 
-            int currentExStyle = GetWindowLong(Handle, GWL_EXSTYLE);
-            SetWindowLong(Handle, GWL_EXSTYLE, currentExStyle | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE);
+                // We don't want a border...
+                FormBorderStyle = FormBorderStyle.None;
+
+                // Set the form's size to the screen size, we want to cover the whole screen...
+                Size = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+
+                // Set the cursor to a crosshair to indicate selection of the screenshot area...
+                Cursor = Cursors.Cross;
+
+                // Subscribe to events...
+                MouseDown += new MouseEventHandler(Form1_MouseDown);
+                MouseMove += new MouseEventHandler(Form1_MouseMove);
+                MouseUp += new MouseEventHandler(Form1_MouseUp);
+                Paint += new PaintEventHandler(Form1_Paint);
+
+                // Enable double buffering and ignore erasing the background to prevent flicker when painting...
+                SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+                int currentExStyle = GetWindowLong(Handle, GWL_EXSTYLE);
+                SetWindowLong(Handle, GWL_EXSTYLE, currentExStyle | WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE);
+
+                Show();
+                WindowState = FormWindowState.Maximized;
+            }
+
+            base.WndProc(ref m);
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs mouseEventArgs)
@@ -71,6 +114,16 @@ namespace Screenshotter
             startY = mouseEventArgs.Y;
 
             isSelecting = true;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            RegisterHotKey(Handle, MYACTION_HOTKEY_ID, MOD_CONTROL, VK_SNAPSHOT);
+        }
+
+        private void Form1_Closing(object sender, FormClosingEventArgs e)
+        {
+            UnregisterHotKey(Handle, MYACTION_HOTKEY_ID);
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs mouseEventArgs)
