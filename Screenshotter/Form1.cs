@@ -4,9 +4,6 @@ using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-// TODO: Don't change the opacity of the DrawRectangle selection area or the help text...
-// NOTE: Add back help text?
-
 namespace Screenshotter
 {
     public partial class Form1 : Form
@@ -30,7 +27,7 @@ namespace Screenshotter
 
         private const int MYACTION_HOTKEY_ID = 1;
         private const uint MOD_CONTROL = 0x0002;
-        private const uint VK_SNAPSHOT = 0x7B;
+        private const uint VK_SNAPSHOT = 0x2C;
         private const float SELECT_RECT_THICKNESS = 2;
         private const bool COPY_TO_CLIPBOARD = true;
 
@@ -72,6 +69,9 @@ namespace Screenshotter
         {
             if(m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID)
             {
+                // Reset selection...
+                ResetSelection();
+
                 TopMost = true; // Make the form stay on top of all other windows...
                 ShowInTaskbar = false; // Don't show in taskbar...
 
@@ -102,9 +102,24 @@ namespace Screenshotter
 
                 Show();
                 WindowState = FormWindowState.Maximized;
+
+                using(Graphics graphics = CreateGraphics())
+                {
+                    graphics.Clear(BackColor);
+                }
             }
 
             base.WndProc(ref m);
+        }
+
+        private void ResetSelection()
+        {
+            startX = 0;
+            startY = 0;
+            endX = 0;
+            endY = 0;
+            isSelecting = false;
+            Refresh();
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs mouseEventArgs)
@@ -131,7 +146,6 @@ namespace Screenshotter
             // Store the ending points of the screenshot...
             endX = mouseEventArgs.X;
             endY = mouseEventArgs.Y;
-
             Invalidate();
         }
 
@@ -139,11 +153,6 @@ namespace Screenshotter
         {
             // Make sure that we actually selected an area instead of just clicking!
             // Otherwise we'd get an error when creating a new Bitmap!
-            if(startX == endX && startY == endY) 
-            { 
-                isSelecting = false;
-                return; 
-            }
 
             // Make the form invisible so we can take a nice clean screenshot, without the overlay and selection area...
             Visible = false;
@@ -178,9 +187,8 @@ namespace Screenshotter
             // Open the screenshot image?
             bool openScreenshotImage = (ModifierKeys & Keys.Control) == Keys.Control;
             if(openScreenshotImage) { System.Diagnostics.Process.Start(filePath); }
-
-            // Close the application!
-            Close();
+            isSelecting = false;  // Indicate that we're done with the selection
+            Invalidate();  // Request the form to repaint itself
         }
 
         private void Form1_Paint(object sender, PaintEventArgs paintEventArgs)
@@ -188,33 +196,15 @@ namespace Screenshotter
             // Get the Graphics object from the PaintEventArgs...
             Graphics graphics = paintEventArgs.Graphics;
 
-            //DrawHelpText(graphics);
-
-            if(!isSelecting) { return; } // Fuck off if we're not selecting...
-
-            Pen pen = new Pen(Color.Red, SELECT_RECT_THICKNESS); // Create a red pen with a specified width...
+            if(!isSelecting)
+            {
+                graphics.Clear(BackColor);  // Clear the graphics with the form's background color
+                return;
+            }
 
             // Draw a rectangle on the form with the selected area dimensions...
+            Pen pen = new Pen(Color.Red, SELECT_RECT_THICKNESS); // Create a red pen with a specified width...
             graphics.DrawRectangle(pen, Math.Min(startX, endX), Math.Min(startY, endY), Math.Abs(startX - endX), Math.Abs(startY - endY));
         }
-
-        /*private void DrawHelpText(Graphics graphics)
-        {
-            // Create a new font and brush...
-            Font font = new Font("Arial", 16);
-            Brush brush = Brushes.Red;
-
-            // Draw the text at the top left corner of the screen...
-            string message = "Hold CTRL to open the screenshot image...";
-            float cornerOffset = 10;
-            graphics.DrawString(message, font, brush, cornerOffset, cornerOffset);
-
-            // Draw a custom underline for the text...
-            const float underlineY = 36;
-            Pen thickPen = new Pen(Color.Red, 2);
-            float underlineX1 = cornerOffset;
-            float underlineX2 = underlineX1 + TextRenderer.MeasureText(message, font).Width;
-            graphics.DrawLine(thickPen, underlineX1, underlineY, underlineX2, underlineY);
-        }*/
     }
 }
