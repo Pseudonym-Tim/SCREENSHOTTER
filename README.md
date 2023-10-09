@@ -7,7 +7,7 @@ Designed to be as lightweight and minimalistic as possible, so it's pretty quick
 * Built with .NET framework v4.7.2
 
 # USAGE:
-* Upon launching the program and pressing the default hotkey (CTRL + F12) you'll notice that the screen becomes darker, and that you can now click and drag to select a specific region.
+* Upon launching the program and pressing the default hotkey (CTRL + PrintScreen) you'll notice that the screen becomes darker, and that you can now click and drag to select a specific region.
 The region that you have selected will be saved as an image to `"C:\Users\[USERNAME]\Pictures\screenshots\"`. The image will automatically be copied
 to your clipboard, so you can paste it directly into a Discord chat for example.
 
